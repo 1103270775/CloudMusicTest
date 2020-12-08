@@ -340,7 +340,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             }else{//不存在下一曲
                 if(endTime-mPlayMusicView.getPlayPosition()<=0){//到终点了
-                    runOnUiThread(new Runnable() {//回到列表的第一首曲子
+                    runOnUiThread(new Runnable() {//回到列表的第一首曲子00
                         @Override
                         public void run() {
                             mPlayMusicView.stopMusic();
