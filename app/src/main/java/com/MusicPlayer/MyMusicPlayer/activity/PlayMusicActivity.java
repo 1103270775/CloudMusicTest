@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -315,7 +316,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPlayMusicView.destroy();
-        handler.removeCallbacks(runnable);
+//        handler.removeCallbacks(runnable);
 
     }
     private Runnable runnable = new Runnable() {
@@ -328,8 +329,12 @@ public class PlayMusicActivity extends AppCompatActivity {
 //            System.out.println("HELLO");
             //更新歌词
             musicLrc.updateTime(mPlayMusicView.getPlayPosition());
-            if(mList.size()-1>position){//存在下一曲
-                if(endTime - mPlayMusicView.getPlayPosition() < 1000){//剩余时间不够，自动触发下一首歌
+//            System.out.println("Size:"+mList.size());
+//            System.out.println("position:"+position);
+            if(position<mList.size()-1){//存在下一曲
+                //多线程中的endTime需要适配更新，不然会出现歌曲和时间错配
+                endTime = (int)mList.get(position).getEndTime();
+                if(endTime - mPlayMusicView.getPlayPosition() < 500){//剩余时间不够，自动触发下一首歌
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -339,12 +344,14 @@ public class PlayMusicActivity extends AppCompatActivity {
                     });
                 }
             }else{//不存在下一曲
+                //多线程中的endTime需要适配更新，不然会出现歌曲和时间错配
+                endTime = (int)mList.get(position).getEndTime();
                 if(endTime-mPlayMusicView.getPlayPosition()<=0){//到终点了
                     runOnUiThread(new Runnable() {//回到列表的第一首曲子00
                         @Override
                         public void run() {
-                            mPlayMusicView.stopMusic();
-                            mPlayMusicView.destroy();
+//                            mPlayMusicView.stopMusic();
+//                            mPlayMusicView.destroy();
 //                       handler.removeCallbacks(runnable);
                             position = -1;
                             nextMusic.performClick();
