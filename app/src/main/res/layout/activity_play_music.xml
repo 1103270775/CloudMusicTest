@@ -121,13 +121,14 @@
 
             <CheckBox
                 android:id="@+id/music_lrc_iv"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
-                android:background="@mipmap/musiclrc_icon"
-                android:button="@null"
-                />
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+
+                android:background="@mipmap/musiclrc_icon_one"
+                android:button="@null" />
 
             <ImageView
                 android:id="@+id/local_music_bottom_iv_next"
