@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/play_music_FrameView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <com.MusicPlayer.MyMusicPlayer.view.PlayMusicView
+        android:id="@+id/play_music_view"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+    </com.MusicPlayer.MyMusicPlayer.view.PlayMusicView>
+
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="16dp"
+        android:onClick="onBackClick"
+        android:src="@drawable/no_bar_back" />
+    <!--显示歌词的控件-->
+<!--    app:lrcNormalTextColor="@android:color/darker_gray"-->
+    <me.wcy.lrcview.LrcView
+        android:id="@+id/music_lrc"
+        android:layout_width="match_parent"
+        android:layout_height="477dp"
+        android:background="@color/colorWindow"
+        android:visibility="gone"
+        app:lrcAnimationDuration="1000"
+        app:lrcCurrentTextColor="@color/colorYellow"
+        app:lrcDividerHeight="24dp"
+        app:lrcLabel="找不到歌词(&gt;_&lt;)"
+        app:lrcNormalTextColor="@android:color/darker_gray"
+        app:lrcPadding="16dp"
+        app:lrcTextSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="253dp"
+        android:layout_marginTop="480dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="音乐名称"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="作者"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <!--        //进度条-->
+
+        <LinearLayout
+            android:id="@+id/ll_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="#00FFFFFF"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_leftTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="0:01"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:paddingEnd="15dp" />
+
+            <TextView
+                android:id="@+id/tv_rightTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4:30"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/local_music_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="#33EEEEEE">
+
+            <CheckBox
+                android:id="@+id/music_lrc_iv"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:background="@mipmap/musiclrc_icon"
+                android:button="@null"
+                />
+
+            <ImageView
+                android:id="@+id/local_music_bottom_iv_next"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                android:src="@mipmap/icon_next"
+
+                />
+
+            <ImageView
+                android:id="@+id/local_music_bottom_iv_play"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="40dp"
+                android:layout_toLeftOf="@id/local_music_bottom_iv_next"
+                android:src="@mipmap/icon_pause"
+
+                />
+
+            <ImageView
+                android:id="@+id/local_music_bottom_iv_last"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="40dp"
+                android:layout_toLeftOf="@id/local_music_bottom_iv_play"
+                android:src="@mipmap/icon_last"
+
+                />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

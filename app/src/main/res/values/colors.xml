@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimaryDark">@color/base_color</color>
+    <color name="colorAccent">@color/base_color</color>
+
+    <color name="base_color">#ffce3d3a</color>
+
+    <color name="color_page_bg">#F1F3F4</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_black">#000000</color>
+    <color name="color_font">#333333</color>
+
+    <color name="colorPrimary">#6200EE</color>
+<!--    <color name="colorPrimaryDark">#3700B3</color>-->
+<!--    <color name="colorAccent">#03DAC5</color>-->
+    <color name="colorPink">#FFC0CB</color>
+    <color name="colorDriver">#434343</color>
+    <color name="colorWindow">#00000000</color>
+    <color name="colorYellow">#FFD200</color>
+    <color name="colorGray">#00FFFDFD</color>
+</resources>
