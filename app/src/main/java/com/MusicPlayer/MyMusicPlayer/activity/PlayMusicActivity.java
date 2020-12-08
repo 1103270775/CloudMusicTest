@@ -52,6 +52,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     private Boolean IsPlay = false;
     private List<MusicModel> mList = new ArrayList<>();
     private int position;//播放位置
+    private int endTime;//结束时间
 
     @BindView(R.id.iv_bg)
     ImageView mIvBg;
@@ -110,7 +111,8 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         rightTime.setText(mList.get(position).getDuration());
         //设置seekBar的最大值
-        seekBar.setMax((int)mList.get(position).getEndTime());
+        endTime = (int)mList.get(position).getEndTime();
+        seekBar.setMax(endTime);
 
         System.out.println("Hello:"+position);
 
@@ -130,8 +132,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 .into(mIvBg);
         mTvName.setText(mMusicModel.getName());
         mTvAuthor.setText(mMusicModel.getAuthor());
-        //初始化
-//        getLrcText(mMusicModel);
+
         //音乐播放转盘
         mPlayMusicView.setMusic(mMusicModel);
 
@@ -262,7 +263,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             //音乐播放转盘
             mPlayMusicView.setMusic(mMusicModel);
             mPlayMusicView.playMusic();
-//            getLrcText(mMusicModel);
+
             IsPlay = true;
             playMusicIv.setImageResource(R.mipmap.icon_pause);
         }
@@ -314,6 +315,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPlayMusicView.destroy();
+        handler.removeCallbacks(runnable);
 
     }
     private Runnable runnable = new Runnable() {
@@ -323,10 +325,36 @@ public class PlayMusicActivity extends AppCompatActivity {
             leftTime.setText(time.format(mPlayMusicView.getPlayPosition()));
             //进度条更新
             seekBar.setProgress(mPlayMusicView.getPlayPosition());
-            System.out.println("HELLO");
+//            System.out.println("HELLO");
             //更新歌词
             musicLrc.updateTime(mPlayMusicView.getPlayPosition());
-            handler.postDelayed(runnable,1000);
+            if(mList.size()-1>position){//存在下一曲
+                if(endTime - mPlayMusicView.getPlayPosition() < 1000){//剩余时间不够，自动触发下一首歌
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //ui线程触发按钮按下 如果不使用UI线程按钮，可能无法跳转到下一曲
+                            nextMusic.performClick();
+                        }
+                    });
+                }
+            }else{//不存在下一曲
+                if(endTime-mPlayMusicView.getPlayPosition()<=0){//到终点了
+                    runOnUiThread(new Runnable() {//回到第一首曲子
+                        @Override
+                        public void run() {
+                            mPlayMusicView.stopMusic();
+                            mPlayMusicView.destroy();
+//                       handler.removeCallbacks(runnable);
+                            position = -1;
+                            nextMusic.performClick();
+                        }
+                    });
+
+                }
+
+            }
+            handler.postDelayed(runnable,300);
 
         }
 
