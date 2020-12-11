@@ -231,7 +231,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            lrcText = new String(buffer,"gbk");
+            lrcText = new String(buffer,"gbk");//需要gbk格式
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,6 +281,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         if(position>mList.size()-1){
             Toast.makeText(this,"已经是最后一首了，没有下一曲!",Toast.LENGTH_SHORT).show();
             playMusicIv.setImageResource(R.mipmap.icon_play);
+
+//            position = 0;//回到开始
         }else {
 //            position++;//下一曲
             rightTime.setText(mList.get(position).getDuration());
@@ -345,16 +347,18 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             }else{//不存在下一曲
                 //多线程中的endTime需要适配更新，不然会出现歌曲和时间错配
-                endTime = (int)mList.get(position).getEndTime();
+                try {
+                    endTime = (int)mList.get(position).getEndTime();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if(endTime-mPlayMusicView.getPlayPosition()<=0){//到终点了
                     runOnUiThread(new Runnable() {//回到列表的第一首曲子00
                         @Override
                         public void run() {
-//                            mPlayMusicView.stopMusic();
-//                            mPlayMusicView.destroy();
-//                       handler.removeCallbacks(runnable);
                             position = -1;
                             nextMusic.performClick();
+
                         }
                     });
 
