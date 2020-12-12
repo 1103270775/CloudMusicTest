@@ -32,7 +32,8 @@
             android:gravity="center_horizontal"
             android:text="账 号:"
             android:textSize="18sp"
-            android:textColor="#070706"/>
+            android:textColor="#FFFFF0"
+            android:textStyle="bold"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -59,8 +60,9 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="密 码:"
-            android:textColor="#0A0A08"
-            android:textSize="18sp" />
+            android:textColor="#FFFFF0"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <EditText
             android:layout_width="wrap_content"
