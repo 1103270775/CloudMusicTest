@@ -1,83 +1,70 @@
 package com.MusicPlayer.MyMusicPlayer.activity;
 
-import android.content.ContentValues;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.MusicPlayer.MyMusicPlayer.R;
-import com.MusicPlayer.MyMusicPlayer.help.DBHelper;
+;import com.MusicPlayer.MyMusicPlayer.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private DBHelper dbHelper;
 
 
-    //实现插入数据功能
-    private void insertData(SQLiteDatabase db, String count, String pwd) {
-        ContentValues values = new ContentValues();
-        values.put("sname", count);
-        values.put("spwd", pwd);
-        db.insert("stdb", null, values);
-    }
-
-    //数据库查询功能
-    private void selectDate(SQLiteDatabase db, String count, String pwd) {
-
-    }
+    private SharedPreferences user ;
+    private EditText username =null;
+    private EditText pwd = null;
+    private String login_username = null;
+    private String login_password = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_layout);
-
-
-        dbHelper = new DBHelper(LoginActivity.this, "stdb", null, 1);
-
-        //获取账号输入框
-        final EditText count_view = (EditText) findViewById(R.id.account);
-
-        //获取密码输入框
-        final EditText pwd_view = (EditText) findViewById(R.id.password);
-
+        setContentView(R.layout.activity_login);
         //获取注册按钮
-        final Button btn1 = (Button) findViewById(R.id.register);
+        Button button_register = findViewById(R.id.register);
+
+        username = findViewById(R.id.login_account);
+        pwd = findViewById(R.id.login_password);
+
+
+        //进入注册界面
+        button_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_login = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent_login);
+            }
+        });
 
         //获取登录按钮
-        final Button btn2 = (Button) findViewById(R.id.login);
+        Button button_login = findViewById(R.id.login);
 
-        //注册功能
-        btn1.setOnClickListener(new View.OnClickListener() {
+        login_username = username.getText().toString();
+        login_password = pwd.getText().toString();
+
+        //验证登录问题
+        button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = count_view.getText().toString();
-                String pwd = pwd_view.getText().toString();
-
-                if (name.equals("") || pwd.equals("")) {
-                    Toast.makeText(LoginActivity.this, "填写的账号或者密码为空或", Toast.LENGTH_SHORT).show();
-                } else {
-                    insertData(dbHelper.getReadableDatabase(), name, pwd);
-                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                user  = getSharedPreferences("user",MODE_PRIVATE);
+                System.out.println(user.getAll()+"=========================================");
+                System.out.println(username.getText().toString()+" "+login_username);
+                if (user.getString("username",null).equals(username.getText().toString())&&user.getString("pwd",null).equals(pwd.getText().toString())){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
-                //
-            }
-        });
-
-        //登录功能
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(LoginActivity.this,"密码错误或用户不存在",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
+
 
 
     }

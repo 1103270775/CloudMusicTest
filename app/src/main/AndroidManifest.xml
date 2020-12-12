@@ -33,6 +33,9 @@
         <activity
             android:name="com.MusicPlayer.MyMusicPlayer.activity.PlayMusicActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.MusicPlayer.MyMusicPlayer.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.MusicPlayer.MyMusicPlayer.activity.LoginActivity"
